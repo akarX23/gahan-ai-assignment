@@ -1,0 +1,62 @@
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
+
+/* Default body background from our theme */
+
+a {
+  text-decoration: none;
+  @apply text-fg;
+}
+
+body {
+  @apply bg-paper font-primary;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-paper;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #444444cc;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+  opacity: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+
+@layer utilities {
+  .padding-alignment {
+    @apply px-4  md:px-32;
+  }
+
+  .margin-alignment {
+    @apply mx-4 mb:mx-20 sm:mx-24 md:mx-32;
+  }
+
+  /* Add this class to hide horizontal scrolls */
+  .hide-scroll-x::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  .shadow-top {
+    clip-path: polygon(0% -20%, 100% -20%, 100% 100%, 0% 100%);
+  }
+  .shadow-right {
+    clip-path: polygon(0% 0%, 120% 0%, 120% 100%, 0% 100%);
+  }
+  .shadow-bottom {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 120%, 0% 120%);
+  }
+  .shadow-left {
+    clip-path: polygon(-20% 0%, 100% 0%, 100% 100%, -20% 100%);
+  }
+
+  .shadow-bottom-right {
+    clip-path: polygon(0% 0%, 120% 0%, 120% 120%, 0% 120%);
+  }
+}
