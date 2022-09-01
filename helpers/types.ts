@@ -23,13 +23,22 @@ export interface reduxUserState {
   details: userInDb
 }
 
+export enum userTypes {
+  institute = 'institute',
+  student = 'student',
+  teacher = 'teacher',
+  admin = 'admin',
+}
+
 export interface userInDb {
   name?: string
-  username?: string
   email?: string
   emailVerified?: boolean
   phone?: number
   password?: string
+  dob?: Date
+  address?: string
+  type?: userTypes
 }
 
 export interface LoginParams {
@@ -42,9 +51,9 @@ export interface CustomeApiRequest extends NextApiRequest {
   userId: string
 }
 
-export interface ApiController {
+export interface ApiController<T> {
   status: number
-  data?: object | number | null
+  data?: T
 }
 
 export interface ImageAbstractProps extends ImageProps {
@@ -73,4 +82,9 @@ export interface CookieOptions {
   path?: string
   secure?: boolean
   sameSite?: string
+}
+
+export interface AuthApiRequest extends NextApiRequest {
+  user: userInDb
+  type: userTypes
 }

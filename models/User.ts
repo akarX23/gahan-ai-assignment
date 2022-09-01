@@ -1,16 +1,9 @@
-import { userInDb } from 'helpers/types'
+import { userInDb, userTypes } from 'helpers/types'
 import mongoose from 'mongoose'
 
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-  },
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    index: true,
   },
   email: {
     type: String,
@@ -38,9 +31,21 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  dob: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  type: {
+    type: String,
+    enum: Object.values(userTypes),
+  },
 })
 
-const User = mongoose.models.User || mongoose.model('User', UserSchema)
+const User =
+  (mongoose.models.User as mongoose.Model<userInDb>) ||
+  mongoose.model<userInDb>('User', UserSchema)
 
 const findOne = async (query: userInDb) => await User.findOne(query).lean()
 
@@ -69,7 +74,7 @@ const upsertOne = async (query: userInDb, data: userInDb) => {
     upsert: true,
     returnOriginal: false,
   }).lean()
-  delete user.authToken
+
   return user
 }
 
