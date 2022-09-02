@@ -111,3 +111,12 @@ export interface StudentVerification {
   batch?: BatchModel | string
   _id?: string
 }
+
+export interface InstituteRegister {
+  name?: string
+  email?: string
+  phone?: number
+  password?: string
+  address?: string
+  _id?: string
+}

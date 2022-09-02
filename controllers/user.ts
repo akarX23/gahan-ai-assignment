@@ -1,6 +1,7 @@
 import { internalError, statusCode } from 'helpers/constants'
 import {
   ApiController,
+  InstituteRegister,
   LoginParams,
   StudentRegister,
   userInDb,
@@ -152,6 +153,37 @@ export const registerStudent = async (
       batch: batch._id,
       institute: institute._id,
     })
+
+    userFromDb.password = ''
+
+    console.log(password)
+
+    // SendMail(email, password)
+
+    return { status: statusCode.Success, data: userFromDb }
+  } catch (error) {
+    console.log('Authentication', error)
+    return internalError
+  }
+}
+
+export const registerInstitute = async (
+  instituteDetails: InstituteRegister
+): Promise<ApiController<userInDb | string>> => {
+  try {
+    if (!instituteDetails)
+      return { status: statusCode.BadRequest, data: 'Invalid User' }
+
+    let password = instituteDetails.password || genRandomString(10)
+    let hash = await encryptPassword(password)
+
+    let userToInsert: userInDb = {
+      ...instituteDetails,
+      password: hash,
+      type: userTypes.institute,
+    }
+
+    let userFromDb = await User.insertOne(userToInsert)
 
     userFromDb.password = ''
 
