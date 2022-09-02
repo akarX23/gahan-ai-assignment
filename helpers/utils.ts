@@ -68,3 +68,29 @@ export const genRandomString = (len: number) => {
   }
   return text
 }
+
+// generate password with at least 1 number 1 lowercase 1 uppercase and 1 special character
+export const genPassword = (len: number): string => {
+  let password = ''
+  const possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~.'
+
+  for (let i = 0; i < len; i++) {
+    password += possible.charAt(Math.floor(Math.random() * possible.length))
+  }
+
+  const hasNumber = new RegExp('[0-9]')
+  const hasLower = new RegExp('[a-z]')
+  const hasUpper = new RegExp('[A-Z]')
+  const hasSpecial = new RegExp('[!"#$%&\'()*+,-./:;<=>?@[]^_`{|}~.]')
+  if (
+    hasNumber.test(password) &&
+    hasLower.test(password) &&
+    hasUpper.test(password) &&
+    hasSpecial.test(password)
+  ) {
+    return password
+  } else {
+    return genPassword(len)
+  }
+}

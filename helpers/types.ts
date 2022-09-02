@@ -31,6 +31,7 @@ export enum userTypes {
 }
 
 export interface userInDb {
+  _id?: string
   name?: string
   email?: string
   emailVerified?: boolean
@@ -39,6 +40,8 @@ export interface userInDb {
   dob?: Date
   address?: string
   type?: userTypes
+  studentAccepted?: boolean
+  teacherInstitute?: userInDb | string
 }
 
 export interface LoginParams {
@@ -87,4 +90,12 @@ export interface CookieOptions {
 export interface AuthApiRequest extends NextApiRequest {
   user: userInDb
   type: userTypes
+}
+
+export interface BatchModel {
+  _id?: string
+  title?: string
+  teacher?: userInDb | string
+  institute?: userInDb | string
+  students?: userInDb[] | string
 }

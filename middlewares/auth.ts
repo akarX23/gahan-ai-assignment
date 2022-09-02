@@ -22,6 +22,8 @@ const auth =
         return
       }
 
+      console.log(user)
+
       req.user = user
       req.type = user?.type
 

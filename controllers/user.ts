@@ -17,14 +17,24 @@ export const createUser = async (
         (type) => type === loggedInUser?.type
       ) &&
         process.env.NODE_ENV === 'production') ||
-      (loggedInUser.type === userTypes.institute &&
+      (loggedInUser?.type === userTypes.institute &&
         userDetails.type !== userTypes.teacher)
     )
       return { status: statusCode.BadRequest, data: 'Not right user' }
 
     let password = genRandomString(10)
     let hash = await encryptPassword(password)
-    let userFromDb = await User.insertOne({ ...userDetails, password: hash })
+
+    let userToInsert = {
+      ...userDetails,
+      password: hash,
+    }
+
+    if (loggedInUser?.type === userTypes.institute) {
+      userToInsert.teacherInstitute = loggedInUser._id
+    }
+
+    let userFromDb = await User.insertOne(userToInsert)
 
     userFromDb.password = ''
 

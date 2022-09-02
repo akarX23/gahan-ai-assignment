@@ -41,6 +41,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: Object.values(userTypes),
   },
+  studentAccepted: { type: Boolean, default: false },
+  teacherInstitute: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 })
 
 const User =
@@ -78,19 +80,4 @@ const upsertOne = async (query: userInDb, data: userInDb) => {
   return user
 }
 
-const findByUid = async (uid: string) => await User.findOne({ uid })
-
-const findByToken = async (token: string) =>
-  await User.findOne({ authToken: token })
-
-export {
-  User,
-  findOne,
-  find,
-  insertOne,
-  upsertOne,
-  deleteOne,
-  updateOne,
-  findByUid,
-  findByToken,
-}
+export { User, findOne, find, insertOne, upsertOne, deleteOne, updateOne }
