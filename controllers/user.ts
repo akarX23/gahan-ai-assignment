@@ -30,7 +30,10 @@ export const createUser = async (
     )
       return { status: statusCode.BadRequest, data: 'Not right user' }
 
-    let password = genRandomString(10)
+    let password =
+      process.env.NODE_ENV === 'development' && userDetails.password
+        ? userDetails.password
+        : genRandomString(10)
     let hash = await encryptPassword(password)
 
     let userToInsert = {

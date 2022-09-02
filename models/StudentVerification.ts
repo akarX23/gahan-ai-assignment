@@ -18,7 +18,7 @@ const StudentVerify = new mongoose.Schema({
 
 const StudVerify =
   (mongoose.models.StudVerify as mongoose.Model<StudentVerification>) ||
-  mongoose.model<StudentVerification>('StudVerify', StudentVerify)
+  mongoose.model<StudentVerification>('StudVerification', StudentVerify)
 
 const findOne = async (query: StudentVerification) =>
   await StudVerify.findOne(query).lean()

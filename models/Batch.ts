@@ -26,7 +26,8 @@ const Batch =
   (mongoose.models.Batch as mongoose.Model<BatchModel>) ||
   mongoose.model<BatchModel>('Batch', BatchSchema)
 
-const findOne = async (query: BatchModel) => await Batch.findOne(query).lean()
+const findOne = async (query: BatchModel): Promise<BatchModel> =>
+  await Batch.findOne(query).lean()
 
 const find = async (query: BatchModel) => await Batch.find(query).lean()
 
@@ -57,4 +58,25 @@ const upsertOne = async (query: BatchModel, data: BatchModel) => {
   return batch
 }
 
-export { Batch, findOne, find, insertOne, upsertOne, deleteOne, updateOne }
+const addStudentToBatch = async (batchId: string, studentId: string) => {
+  const batch = await Batch.findOneAndUpdate(
+    { _id: batchId },
+    { $push: { students: studentId } },
+    {
+      returnOriginal: false,
+    }
+  ).lean()
+
+  return batch
+}
+
+export {
+  Batch,
+  findOne,
+  find,
+  insertOne,
+  upsertOne,
+  deleteOne,
+  updateOne,
+  addStudentToBatch,
+}

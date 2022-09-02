@@ -97,7 +97,7 @@ export interface BatchModel {
   title?: string
   teacher?: userInDb | string
   institute?: userInDb | string
-  students?: userInDb[] | string
+  students?: userInDb[] | string[]
 }
 
 export interface StudentRegister extends userInDb {
@@ -109,4 +109,5 @@ export interface StudentVerification {
   student?: userInDb | string
   institute?: userInDb | string
   batch?: BatchModel | string
+  _id?: string
 }

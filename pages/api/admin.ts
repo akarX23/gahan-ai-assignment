@@ -15,7 +15,6 @@ const handler = async (req: CustomRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'POST':
       let { data, status } = await createUser(req.body, req.user)
-      authenticateUser(res, data as userInDb)
       res.status(status).json(data)
       break
     default:
