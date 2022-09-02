@@ -69,6 +69,16 @@ export const genRandomString = (len: number) => {
   return text
 }
 
+export const genRandomNumber = (len: number): number => {
+  let text = ''
+  const possible = '123456789'
+
+  for (let i = 0; i < len; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length))
+  }
+  return parseInt(text)
+}
+
 // generate password with at least 1 number 1 lowercase 1 uppercase and 1 special character
 export const genPassword = (len: number): string => {
   let password = ''

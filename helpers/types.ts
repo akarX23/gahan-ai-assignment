@@ -112,6 +112,11 @@ export interface StudentVerification {
   _id?: string
 }
 
+export interface OtpVerification {
+  user?: userInDb | string
+  otp?: number
+}
+
 export interface InstituteRegister {
   name?: string
   email?: string
@@ -121,21 +126,18 @@ export interface InstituteRegister {
   _id?: string
 }
 
-export interface MailData {
-  to: string
-  html?: string
-  subject?: string
-  attachments?: string[]
-  from?: string
-}
-
 export interface CredentialMailData {
   name?: string
   to?: string
   password?: string
 }
 
-export interface AllMailData extends CredentialMailData {
+export interface OtpMailData {
+  otp?: number
+  name?: string
+}
+
+export interface AllMailData extends CredentialMailData, OtpMailData {
   to: string
   attachments?: string[]
 }

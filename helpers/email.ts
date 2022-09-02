@@ -1,6 +1,7 @@
 import nodemailer, { SendMailOptions } from 'nodemailer'
 import { AllMailData, mailTemplates } from './types'
 import credentialInvite from './mailTemplates/credentialsMail'
+import otpMail from './mailTemplates/otpMail'
 
 const getEmailData = (
   data: AllMailData,
@@ -17,6 +18,13 @@ const getEmailData = (
         ...mailData,
         subject: 'Login Credentials',
         html: credentialInvite(data),
+      }
+      break
+    case mailTemplates.otp:
+      mailData = {
+        ...mailData,
+        subject: 'OTP for mail verification',
+        html: otpMail(data),
       }
       break
     default:

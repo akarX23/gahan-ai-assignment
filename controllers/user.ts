@@ -8,11 +8,17 @@ import {
   userInDb,
   userTypes,
 } from 'helpers/types'
-import { encryptPassword, genRandomString, verifyPassword } from 'helpers/utils'
+import {
+  encryptPassword,
+  genRandomNumber,
+  genRandomString,
+  verifyPassword,
+} from 'helpers/utils'
 import { IncomingMessage } from 'http'
 import * as User from 'models/User'
 import * as Batch from 'models/Batch'
 import * as StudVerify from 'models/StudentVerification'
+import * as OtpVerify from 'models/OtpVerification'
 import { NextApiRequestCookies } from 'next/dist/server/api-utils'
 import jwt from 'jsonwebtoken'
 import { sendEmail } from 'helpers/email'
@@ -215,6 +221,62 @@ export const registerInstitute = async (
     )
 
     return { status: statusCode.Success, data: userFromDb }
+  } catch (error) {
+    console.log('Authentication', error)
+    return internalError
+  }
+}
+
+export const sendOtpMailVerification = async (
+  loggedInUser: userInDb
+): Promise<ApiController<string>> => {
+  try {
+    if (!loggedInUser) return { status: statusCode.Unauthorized }
+
+    let otp = genRandomNumber(4)
+
+    await OtpVerify.deleteOne({ user: loggedInUser._id })
+
+    await OtpVerify.insertOne({
+      user: loggedInUser._id,
+      otp,
+    })
+
+    sendEmail(
+      {
+        to: loggedInUser.email,
+        name: loggedInUser.name,
+        otp,
+      },
+      mailTemplates.otp
+    )
+
+    return { status: statusCode.Success, data: 'OTP sent' }
+  } catch (error) {
+    console.log('Authentication', error)
+    return internalError
+  }
+}
+
+export const verifyEmailFromOtp = async (
+  otp: string,
+  loggedInUser: userInDb
+): Promise<ApiController<string>> => {
+  try {
+    if (!otp) return { status: statusCode.BadRequest, data: 'Invalid OTP' }
+
+    if (!loggedInUser) return { status: statusCode.Unauthorized }
+
+    let otpVerify = await OtpVerify.findOne({
+      user: loggedInUser._id,
+      otp: parseInt(otp),
+    })
+
+    if (!otpVerify)
+      return { status: statusCode.BadRequest, data: 'Invalid OTP' }
+
+    await User.updateOne({ _id: loggedInUser._id }, { emailVerified: true })
+    return { status: statusCode.Success, data: 'OTP verified' }
   } catch (error) {
     console.log('Authentication', error)
     return internalError

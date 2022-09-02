@@ -60,12 +60,4 @@ const upsertOne = async (
   return batch
 }
 
-export {
-  StudVerify as StudVerifyModel,
-  findOne,
-  find,
-  insertOne,
-  upsertOne,
-  deleteOne,
-  updateOne,
-}
+export { StudVerify, findOne, find, insertOne, upsertOne, deleteOne, updateOne }
