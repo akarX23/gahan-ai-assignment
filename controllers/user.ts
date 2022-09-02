@@ -3,6 +3,7 @@ import {
   ApiController,
   InstituteRegister,
   LoginParams,
+  mailTemplates,
   StudentRegister,
   userInDb,
   userTypes,
@@ -14,6 +15,7 @@ import * as Batch from 'models/Batch'
 import * as StudVerify from 'models/StudentVerification'
 import { NextApiRequestCookies } from 'next/dist/server/api-utils'
 import jwt from 'jsonwebtoken'
+import { sendEmail } from 'helpers/email'
 
 export const createUser = async (
   userDetails: userInDb,
@@ -52,7 +54,14 @@ export const createUser = async (
 
     console.log(password)
 
-    // SendMail(email, password)
+    sendEmail(
+      {
+        to: userFromDb.email,
+        name: userFromDb.name,
+        password,
+      },
+      mailTemplates.credentials
+    )
 
     return { status: statusCode.Success, data: userFromDb }
   } catch (error) {
@@ -158,7 +167,14 @@ export const registerStudent = async (
 
     console.log(password)
 
-    // SendMail(email, password)
+    sendEmail(
+      {
+        to: userFromDb.email,
+        name: userFromDb.name,
+        password,
+      },
+      mailTemplates.credentials
+    )
 
     return { status: statusCode.Success, data: userFromDb }
   } catch (error) {
@@ -189,7 +205,14 @@ export const registerInstitute = async (
 
     console.log(password)
 
-    // SendMail(email, password)
+    sendEmail(
+      {
+        to: userFromDb.email,
+        name: userFromDb.name,
+        password,
+      },
+      mailTemplates.credentials
+    )
 
     return { status: statusCode.Success, data: userFromDb }
   } catch (error) {

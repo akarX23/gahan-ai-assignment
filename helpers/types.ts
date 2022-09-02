@@ -120,3 +120,27 @@ export interface InstituteRegister {
   address?: string
   _id?: string
 }
+
+export interface MailData {
+  to: string
+  html?: string
+  subject?: string
+  attachments?: string[]
+  from?: string
+}
+
+export interface CredentialMailData {
+  name?: string
+  to?: string
+  password?: string
+}
+
+export interface AllMailData extends CredentialMailData {
+  to: string
+  attachments?: string[]
+}
+
+export enum mailTemplates {
+  credentials = 'credentials',
+  otp = 'otp',
+}
