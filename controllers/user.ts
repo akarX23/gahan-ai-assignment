@@ -1,8 +1,16 @@
 import { internalError, statusCode } from 'helpers/constants'
-import { ApiController, LoginParams, userInDb, userTypes } from 'helpers/types'
+import {
+  ApiController,
+  LoginParams,
+  StudentRegister,
+  userInDb,
+  userTypes,
+} from 'helpers/types'
 import { encryptPassword, genRandomString, verifyPassword } from 'helpers/utils'
 import { IncomingMessage } from 'http'
 import * as User from 'models/User'
+import * as Batch from 'models/Batch'
+import * as StudVerify from 'models/StudentVerification'
 import { NextApiRequestCookies } from 'next/dist/server/api-utils'
 import jwt from 'jsonwebtoken'
 
@@ -94,5 +102,63 @@ export const userFromRequest = async (
   } catch (error) {
     console.log('Authentication error', error)
     return
+  }
+}
+
+export const registerStudent = async (
+  studentDetails: StudentRegister
+): Promise<ApiController<userInDb | string>> => {
+  try {
+    if (!studentDetails)
+      return { status: statusCode.BadRequest, data: 'Invalid User' }
+
+    let password = studentDetails.password || genRandomString(10)
+    let hash = await encryptPassword(password)
+
+    const [batch, institute] = await Promise.all([
+      Batch.findOne({ _id: studentDetails.batch }),
+      User.findOne({
+        _id: studentDetails.institute,
+        type: userTypes.institute,
+      }),
+    ])
+
+    if (
+      !batch ||
+      !institute ||
+      batch.institute.toString() !== studentDetails.institute
+    )
+      return {
+        status: statusCode.BadRequest,
+        data: 'Invalid Batch or Institute',
+      }
+
+    let userToInsert: StudentRegister = {
+      ...studentDetails,
+      password: hash,
+      type: userTypes.student,
+    }
+
+    delete userToInsert.batch
+    delete userToInsert.institute
+
+    let userFromDb = await User.insertOne(userToInsert)
+
+    StudVerify.insertOne({
+      student: userFromDb._id,
+      batch: batch._id,
+      institute: institute._id,
+    })
+
+    userFromDb.password = ''
+
+    console.log(password)
+
+    // SendMail(email, password)
+
+    return { status: statusCode.Success, data: userFromDb }
+  } catch (error) {
+    console.log('Authentication', error)
+    return internalError
   }
 }

@@ -41,7 +41,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: Object.values(userTypes),
   },
-  studentAccepted: { type: Boolean, default: false },
+  studentBatch: { type: mongoose.Schema.Types.ObjectId, ref: 'Batch' },
   teacherInstitute: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 })
 

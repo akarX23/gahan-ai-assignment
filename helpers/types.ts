@@ -40,7 +40,7 @@ export interface userInDb {
   dob?: Date
   address?: string
   type?: userTypes
-  studentAccepted?: boolean
+  studentBatch?: string | BatchModel
   teacherInstitute?: userInDb | string
 }
 
@@ -98,4 +98,15 @@ export interface BatchModel {
   teacher?: userInDb | string
   institute?: userInDb | string
   students?: userInDb[] | string
+}
+
+export interface StudentRegister extends userInDb {
+  batch?: string
+  institute?: string
+}
+
+export interface StudentVerification {
+  student?: userInDb | string
+  institute?: userInDb | string
+  batch?: BatchModel | string
 }
