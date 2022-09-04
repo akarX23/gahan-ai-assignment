@@ -146,3 +146,22 @@ export enum mailTemplates {
   credentials = 'credentials',
   otp = 'otp',
 }
+
+export interface QuizQuestionModel {
+  question?: string
+  options?: string[]
+  correctOption?: number
+  marks?: number
+}
+
+export interface QuizModel {
+  _id?: string
+  questions?: QuizQuestionModel[] | string[]
+  duration?: number
+  title?: string
+  teacher?: userInDb | string
+  batch?: BatchModel | string
+  institute?: userInDb | string
+  startTime?: string
+  endTime?: string
+}
