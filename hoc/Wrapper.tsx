@@ -3,6 +3,7 @@ import React from 'react'
 import Layout from 'hoc/Layout'
 import useGlobalAuth from 'helpers/hooks/useGlobalAuth'
 import { DefaultComponentProps } from 'helpers/types'
+import AlertUI from 'widgets/Alert/Alert'
 
 const Wrapper = (Component: React.FC) => {
   const PageWrapper: React.FC<DefaultComponentProps> = (props) => {
@@ -20,7 +21,10 @@ const Wrapper = (Component: React.FC) => {
 
     return (
       <Layout>
-        <Component {...props} />
+        <>
+          <Component {...props} />
+          <AlertUI />
+        </>
       </Layout>
     )
   }

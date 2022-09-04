@@ -1,14 +1,11 @@
 import type { NextApiRequest } from 'next'
 import { ImageProps } from 'next/image'
 import React from 'react'
-import { SvgIconProps } from '@mui/material'
+import { AlertColor, SnackbarProps, SvgIconProps } from '@mui/material'
 
-export interface reduxAlertState {
+export interface reduxAlertState extends SnackbarProps {
   text?: string
-  severity?: string
-  vertical?: string
-  horizontal?: string
-  open?: boolean
+  severity?: AlertColor
 }
 
 export interface reduxAuthModalState {
@@ -35,9 +32,9 @@ export interface userInDb {
   name?: string
   email?: string
   emailVerified?: boolean
-  phone?: number
+  phone?: string
   password?: string
-  dob?: Date
+  dob?: string
   address?: string
   type?: userTypes
   studentBatch?: string | BatchModel
@@ -47,6 +44,16 @@ export interface userInDb {
 export interface LoginParams {
   email?: string
   password?: string
+}
+
+export interface RegisterParams {
+  name?: string
+  email?: string
+  phone?: string
+  dob?: string
+  address?: string
+  batch?: string
+  institute?: string
 }
 
 export interface CustomeApiRequest extends NextApiRequest {
@@ -120,7 +127,7 @@ export interface OtpVerification {
 export interface InstituteRegister {
   name?: string
   email?: string
-  phone?: number
+  phone?: string
   password?: string
   address?: string
   _id?: string

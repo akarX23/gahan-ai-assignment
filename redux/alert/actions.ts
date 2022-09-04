@@ -9,11 +9,11 @@ export const showAlert = createAction(
         payload: {
           text: 'Something went wrong',
           severity: 'error',
-        },
+        } as reduxAlertState,
       }
     }
 
-    return { payload: info }
+    return { payload: info as reduxAlertState }
   }
 )
 

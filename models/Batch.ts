@@ -29,7 +29,8 @@ const Batch =
 const findOne = async (query: BatchModel): Promise<BatchModel> =>
   await Batch.findOne(query).lean()
 
-const find = async (query: BatchModel) => await Batch.find(query).lean()
+const find = async (query: BatchModel, select: string) =>
+  await Batch.find(query).select(select).lean()
 
 const insertOne = async (data: BatchModel) => {
   let newBatch = new Batch(data)

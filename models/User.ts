@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
     index: true,
   },
   phone: {
-    type: Number,
+    type: String,
     index: true,
   },
   password: {
@@ -51,7 +51,8 @@ const User =
 
 const findOne = async (query: userInDb) => await User.findOne(query).lean()
 
-const find = async (query: userInDb) => await User.find(query).lean()
+const find = async (query: userInDb, select?: string) =>
+  await User.find(query).select(select).lean()
 
 const insertOne = async (data: userInDb) => {
   let newUser = new User(data)
