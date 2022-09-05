@@ -21,5 +21,10 @@ export const getInstituteBatchesWithTeacher = async (): Promise<BatchModel[]> =>
 export const getAllTeachers = async (): Promise<userInDb[]> =>
   await api.get('/institute/teacher').then((res) => res.data)
 
-export const createOrUpdateBatch = async (batch: BatchModel): Promise<string> =>
+export const createOrUpdateBatch = async (
+  batch: BatchModel
+): Promise<BatchModel> =>
   await api.post('/institute/batch', batch).then((res) => res.data)
+
+export const createTeacher = async (teacher: userInDb): Promise<userInDb> =>
+  await api.post('/institute/teacher', teacher).then((res) => res.data)

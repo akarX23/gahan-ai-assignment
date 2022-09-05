@@ -49,7 +49,7 @@ export default function BatchModal(props: Props) {
   }, [props.batch])
 
   const onSubmit = async (data: BatchModel) => {
-    await createOrUpdateBatch({ ...data, _id: props.batch?._id })
+    let batch = await createOrUpdateBatch({ ...data, _id: props.batch?._id })
     dispatch(
       showAlert({ text: 'Batch updated successfully', severity: 'success' })
     )
@@ -61,7 +61,7 @@ export default function BatchModal(props: Props) {
         name: teacher?.text || '',
         _id: teacher.value,
       } as userInDb & string,
-      _id: props.batch?._id || '',
+      _id: props.batch?._id || batch._id,
     })
   }
 

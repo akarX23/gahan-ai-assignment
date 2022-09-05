@@ -25,7 +25,7 @@ export const getAllTeachers = async (
   try {
     let teachers = await User.find(
       { type: userTypes.teacher, teacherInstitute: institute._id },
-      'name _id'
+      'name _id email phone'
     )
     return { status: statusCode.Success, data: teachers }
   } catch (error) {
