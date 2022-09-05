@@ -1,16 +1,18 @@
-import { Button } from '@mui/material'
 import Institute from 'components/Dashboard/Institute'
-import useAuth from 'helpers/hooks/useAuth'
-import { LoginParams } from 'helpers/types'
+import { userTypes } from 'helpers/types'
 import Wrapper from 'hoc/Wrapper'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useAppSelector } from 'redux/hooks'
+import Loading from 'widgets/Loading/Loading'
 
 const Home: React.FC = () => {
+  const { isLoading, details } = useAppSelector((state) => state.auth)
+
+  if (isLoading) return <Loading />
+
   return (
     <div className="padding-alignment mt-8">
-      <Institute />
+      {details.type === userTypes.institute && <Institute />}
     </div>
   )
 }
