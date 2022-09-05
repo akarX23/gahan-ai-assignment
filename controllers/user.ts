@@ -220,7 +220,7 @@ export const registerInstitute = async (
       mailTemplates.credentials
     )
 
-    return { status: statusCode.Success, data: userFromDb }
+    return { status: statusCode.Success, data: 'Success' }
   } catch (error) {
     console.log('Authentication', error)
     return internalError

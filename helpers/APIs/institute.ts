@@ -14,3 +14,6 @@ export const getBatchesByInstitute = async (
       },
     })
     .then((res) => res.data)
+
+export const getInstituteBatchesWithTeacher = async (): Promise<BatchModel[]> =>
+  await api.get('/institute/batch').then((res) => res.data)

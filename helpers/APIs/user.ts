@@ -22,3 +22,8 @@ export const registerInstitute = async (details: InstituteRegister) =>
 
 export const registerStudent = async (details: StudentRegister) =>
   await api.post('/student/register', details).then((res) => res.data)
+
+export const sendEmailOtp = async () => await api.get('/auth/send-email-otp')
+
+export const verifyOTP = async (otp: string) =>
+  await api.get('/auth/verify-mail-otp?otp=' + otp)

@@ -71,6 +71,14 @@ const addStudentToBatch = async (batchId: string, studentId: string) => {
   return batch
 }
 
+const batchesWithTeacher = async (instituteId: string) => {
+  const batch = await Batch.find({ institute: instituteId })
+    .populate('teacher')
+    .lean()
+
+  return batch
+}
+
 export {
   Batch,
   findOne,
@@ -80,4 +88,5 @@ export {
   deleteOne,
   updateOne,
   addStudentToBatch,
+  batchesWithTeacher,
 }

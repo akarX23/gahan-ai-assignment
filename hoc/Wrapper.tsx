@@ -1,13 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import Layout from 'hoc/Layout'
 import useGlobalAuth from 'helpers/hooks/useGlobalAuth'
 import { DefaultComponentProps } from 'helpers/types'
 import AlertUI from 'widgets/Alert/Alert'
+import { useAppSelector } from 'redux/hooks'
+import { useRouter } from 'next/router'
 
 const Wrapper = (Component: React.FC) => {
   const PageWrapper: React.FC<DefaultComponentProps> = (props) => {
     useGlobalAuth()
+
+    const { isAuthenticated, isEmailAuthenticated } = useAppSelector(
+      (state) => state.auth
+    )
+    const router = useRouter()
+
+    useEffect(() => {
+      if (!isAuthenticated && router.pathname !== '/register') {
+        router.push('/login')
+      }
+
+      if (isAuthenticated && !isEmailAuthenticated) {
+        router.push('/verify-email')
+      }
+    }, [isAuthenticated])
 
     // MUTING REF ERRORS
     const originalError = console.error

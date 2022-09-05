@@ -1,4 +1,4 @@
-import { createBatch, getBatchesByInstitute } from 'controllers/batch'
+import { createBatch, getBatchesWithTeacher } from 'controllers/batch'
 import dbConnect from 'helpers/dbConnect'
 import { AuthApiRequest, BatchModel, userTypes } from 'helpers/types'
 import auth from 'middlewares/auth'
@@ -22,9 +22,7 @@ const handler = async (req: CustomRequest, res: NextApiResponse) => {
       break
 
     case 'GET':
-      response = await getBatchesByInstitute(req.query.instituteId)
-      console.log(response)
-
+      response = await getBatchesWithTeacher(req.user._id)
       res.status(response.status).json(response.data)
       break
 

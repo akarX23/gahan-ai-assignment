@@ -11,7 +11,6 @@ import Zoom from '@mui/material/Zoom'
 import Fab from '@mui/material/Fab'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { useTheme } from '@mui/styles'
-// import ShoppingBasketRounded from '@mui/icons-material/ShoppingBasketRounded'
 
 // Images
 import logo from 'assets/Images/logo.png'
@@ -19,11 +18,9 @@ import logo from 'assets/Images/logo.png'
 // Custom imports
 import Drawer from 'components/Header/Drawer'
 import ImageAbstract from 'widgets/ImageAbstract/ImageAbstract'
-import { navBarLinks } from 'helpers/constants'
-import { toggleModal } from 'redux/authModal'
-import NavbarUserDropdown from 'components/Header/NavbarUserDropdown'
-import { useAppDispatch, useAppSelector } from 'redux/hooks'
 import { DefaultComponentProps } from 'helpers/types'
+import useAuth from 'helpers/hooks/useAuth'
+import { useAppSelector } from 'redux/hooks'
 
 function HideOnScroll(props: DefaultComponentProps) {
   const { children, window } = props
@@ -70,7 +67,7 @@ function ScrollTop(props: DefaultComponentProps) {
 const Navbar: React.FC<DefaultComponentProps> = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const { isAuthenticated, isLoading } = useAppSelector((state) => state.auth)
-  const dispatch = useAppDispatch()
+  const { signOutFromApp } = useAuth()
 
   const theme = useTheme()
 
@@ -102,28 +99,27 @@ const Navbar: React.FC<DefaultComponentProps> = (props) => {
                 </a>
               </Link>
             </div>
-            <div className={`hidden items-center md:flex`}>
-              {navBarLinks.map((item, i) => (
-                <Link key={i} href={item.link} shallow>
-                  <a className="p mx-4 text-lg transition duration-200 ease-linear hover:text-primary-main">
-                    {item.text}
-                  </a>
-                </Link>
-              ))}
-            </div>
 
             {!isLoading ? (
               !isAuthenticated ? (
+                <Link href="/login" passHref>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className="ml-2 w-full max-w-max whitespace-nowrap text-sm mbmax:p-2 mb:text-lg"
+                  >
+                    Sign In
+                  </Button>
+                </Link>
+              ) : (
                 <Button
                   variant="contained"
                   color="primary"
                   className="ml-2 w-full max-w-max whitespace-nowrap text-sm mbmax:p-2 mb:text-lg"
-                  onClick={() => dispatch(toggleModal(true))}
+                  onClick={() => signOutFromApp()}
                 >
-                  Sign Up
+                  Sign Out
                 </Button>
-              ) : (
-                <NavbarUserDropdown />
               )
             ) : (
               <div></div>

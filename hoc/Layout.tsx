@@ -9,7 +9,7 @@ const Layout: React.FC<DefaultComponentProps> = (props) => {
     <div className="flex h-screen flex-col justify-between">
       <Navbar />
       <div className="flex-1">{props.children}</div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

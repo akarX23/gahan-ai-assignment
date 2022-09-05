@@ -87,3 +87,16 @@ export const getBatchesByInstitute = async (
     return internalError
   }
 }
+
+export const getBatchesWithTeacher = async (
+  instituteId: string
+): Promise<ApiController<BatchModel[]>> => {
+  try {
+    let batches = await Batch.batchesWithTeacher(instituteId)
+
+    return { status: statusCode.Success, data: batches }
+  } catch (error) {
+    console.log('Authentication', error)
+    return internalError
+  }
+}
