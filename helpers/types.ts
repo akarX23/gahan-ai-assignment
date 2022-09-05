@@ -159,16 +159,17 @@ export interface QuizQuestionModel {
   options?: string[]
   correctOption?: number
   marks?: number
+  _id?: string
 }
 
 export interface QuizModel {
   _id?: string
-  questions?: QuizQuestionModel[] | string[]
+  questions?: QuizQuestionModel[] & string[]
   duration?: number
   title?: string
-  teacher?: userInDb | string
-  batch?: BatchModel | string
-  institute?: userInDb | string
+  teacher?: userInDb & string
+  batch?: BatchModel & string
+  institute?: userInDb & string
   startTime?: string
   endTime?: string
 }

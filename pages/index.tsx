@@ -12,7 +12,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="padding-alignment mt-8">
-      {details.type === userTypes.institute && <Institute />}
+      {details?.type === userTypes.institute && <Institute />}
     </div>
   )
 }

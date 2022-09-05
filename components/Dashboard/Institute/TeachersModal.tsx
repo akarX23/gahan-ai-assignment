@@ -1,11 +1,10 @@
 import { Button } from '@mui/material'
 import { createTeacher } from 'helpers/APIs/institute'
 import { userInDb, userTypes } from 'helpers/types'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { showAlert } from 'redux/alert'
 import { useAppDispatch } from 'redux/hooks'
-import DropdownControl from 'widgets/Dropdown/DropdownControl'
 import InputField from 'widgets/InputField/InputField'
 import Modal from 'widgets/Modal/Modal'
 

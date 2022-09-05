@@ -11,20 +11,20 @@ const Wrapper = (Component: React.FC) => {
   const PageWrapper: React.FC<DefaultComponentProps> = (props) => {
     useGlobalAuth()
 
-    const { isAuthenticated, isEmailAuthenticated } = useAppSelector(
+    const { isAuthenticated, isEmailAuthenticated, isLoading } = useAppSelector(
       (state) => state.auth
     )
     const router = useRouter()
 
     useEffect(() => {
-      if (!isAuthenticated && router.pathname !== '/register') {
+      if (!isAuthenticated && !isLoading && router.pathname !== '/register') {
         router.push('/login')
       }
 
       if (isAuthenticated && !isEmailAuthenticated) {
         router.push('/verify-email')
       }
-    }, [isAuthenticated])
+    }, [isAuthenticated, isLoading])
 
     // MUTING REF ERRORS
     const originalError = console.error
