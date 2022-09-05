@@ -24,7 +24,10 @@ const findOne = async (query: StudentVerification) =>
   await StudVerify.findOne(query).lean()
 
 const find = async (query: StudentVerification) =>
-  await StudVerify.find(query).lean()
+  await StudVerify.find(query)
+    .populate('student', 'name _id')
+    .populate('batch', 'title _id')
+    .lean()
 
 const insertOne = async (data: StudentVerification) => {
   let newStudVerify = new StudVerify(data)

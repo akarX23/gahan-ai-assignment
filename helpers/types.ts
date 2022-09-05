@@ -113,9 +113,9 @@ export interface StudentRegister extends userInDb {
 }
 
 export interface StudentVerification {
-  student?: userInDb | string
-  institute?: userInDb | string
-  batch?: BatchModel | string
+  student?: userInDb & string
+  institute?: userInDb & string
+  batch?: BatchModel & string
   _id?: string
 }
 
