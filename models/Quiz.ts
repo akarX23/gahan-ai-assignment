@@ -93,6 +93,16 @@ const getQuizDataWithAnswers = async (batchId: string) => {
   return quiz
 }
 
+const getQuizzesForStudent = async (batchId: string) => {
+  const quizzes = await Quiz.find({ batch: batchId })
+    .select('title duration batch teacher _id ')
+    .populate('batch', 'title _id')
+    .populate('teacher', 'name _id')
+    .lean()
+
+  return quizzes
+}
+
 export {
   Quiz,
   QuizQuestion,
@@ -100,4 +110,5 @@ export {
   upsertQuizByBatch,
   getQuizDataWithoutAnswers,
   getQuizDataWithAnswers,
+  getQuizzesForStudent,
 }
