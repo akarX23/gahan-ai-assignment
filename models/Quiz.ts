@@ -79,17 +79,17 @@ const upsertQuizByBatch = async (batchId: string, data: QuizModel) => {
   return quiz
 }
 
-const getQuizDataWithoutAnswers = async (batchId: string) => {
-  const quiz = await Quiz.findOne({ batch: batchId })
+const getQuizDataWithoutAnswers = async (quizId: string) => {
+  const quiz = await Quiz.findOne({ _id: quizId })
     .populate('questions', '-correctOption')
+    .populate('teacher', 'name _id')
+    .populate('batch', 'title _id')
     .lean()
   return quiz
 }
 
-const getQuizDataWithAnswers = async (batchId: string) => {
-  const quiz = await Quiz.findOne({ batch: batchId })
-    .populate('questions')
-    .lean()
+const getQuizDataWithAnswers = async (quizId: string) => {
+  const quiz = await Quiz.findOne({ _id: quizId }).populate('questions').lean()
   return quiz
 }
 
@@ -106,6 +106,13 @@ const getQuizzesForStudent = async (batchId: string) => {
 const find = async (query: QuizModel, select?: string) =>
   await Quiz.find(query).select(select).lean()
 
+const getAllQuestions = async (quizId: string) => {
+  const quiz = await Quiz.findOne({ _id: quizId })
+    .populate('questions', '_id marks correctOption')
+    .lean()
+  return quiz
+}
+
 export {
   Quiz,
   QuizQuestion,
@@ -115,4 +122,5 @@ export {
   getQuizDataWithAnswers,
   getQuizzesForStudent,
   find,
+  getAllQuestions,
 }

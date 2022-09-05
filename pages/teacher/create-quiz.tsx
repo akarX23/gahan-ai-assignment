@@ -22,7 +22,6 @@ const CreateQuiz = () => {
       },
     })
   const dispatch = useAppDispatch()
-  const [questions, setQuestions] = useState<QuizQuestionModel[]>([])
   const [questionCount, setQuestionCount] = useState(0)
   const [batches, setBatches] = useState<{ text: string; value: string }[]>([])
 
@@ -90,9 +89,12 @@ const CreateQuiz = () => {
       {[...Array(questionCount)].map((_, i) => (
         <QuizQuestion
           serialNumber={i}
-          onFinish={(id, data) => {
-            setQuestions([...questions, data])
-            setValue('questions', [...getValues('questions'), id])
+          onFinish={(id) => {
+            console.log(id)
+            console.log(getValues('questions'))
+
+            if (!getValues('questions').some((question) => question === id))
+              setValue('questions', [...getValues('questions'), id])
           }}
           key={i}
         />

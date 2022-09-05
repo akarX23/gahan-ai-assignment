@@ -189,3 +189,18 @@ export interface ModalProps extends DefaultComponentProps {
   actionInProgress?: boolean
   headerStyles?: string
 }
+
+export interface QuestionAnswer {
+  question?: string & QuizQuestionModel
+  option?: number
+  marks?: number
+}
+
+export interface QuizAnswers {
+  _id?: string
+  quiz?: QuizModel & string
+  student?: userInDb & string
+  answers?: QuestionAnswer[]
+  totalMarks?: number
+  maxMarks?: number
+}

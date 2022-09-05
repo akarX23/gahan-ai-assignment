@@ -1,5 +1,7 @@
+import { Button } from '@mui/material'
 import { studentQuizzes } from 'helpers/APIs/student'
 import { QuizModel } from 'helpers/types'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useAppSelector } from 'redux/hooks'
 
@@ -23,6 +25,11 @@ const Batches = () => {
             <h3 className="m-0 mb-2">{quiz.title}</h3>
             <p className="m-0 mb-2">Teacher: {quiz.teacher.name}</p>
             <p className="m-0 mb-2">Duration {quiz.duration} hours</p>
+            <Link href={`/quiz/${quiz._id}`} passHref>
+              <Button variant="contained" color="secondary">
+                Attempt Quiz
+              </Button>
+            </Link>
           </div>
         ))}
       </div>

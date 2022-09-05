@@ -4,6 +4,10 @@ import mongoose from 'mongoose'
 //   for (let model in mongoose.models) delete mongoose.models[model]
 
 import 'models/User'
+import 'models/Batch'
+import 'models/OtpVerification'
+import 'models/Quiz'
+import 'models/QuizAnswers'
 
 async function dbConnect() {
   if (mongoose.connection.readyState === 1) return

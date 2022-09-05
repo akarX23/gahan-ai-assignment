@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import InputField from 'widgets/InputField/InputField'
 
 type Props = {
-  onFinish: (id: string, data: QuizQuestionModel) => void
+  onFinish: (id: string) => void
   serialNumber: number
 }
 
@@ -30,7 +30,7 @@ const QuizQuestion = (props: Props) => {
     let newQuestion = await addQuestion(data)
     reset(newQuestion)
 
-    props.onFinish(newQuestion._id, newQuestion)
+    props.onFinish(newQuestion._id)
   }
 
   return (
