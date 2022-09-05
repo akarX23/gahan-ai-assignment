@@ -23,6 +23,7 @@ const Teachers = () => {
             setCurrTeacherEdit({})
             setOpenModal(true)
           }}
+          variant="contained"
         >
           Create Teacher
         </Button>

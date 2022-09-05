@@ -23,6 +23,7 @@ const Batches = () => {
             setCurrBatchEdit({})
             setOpenModal(true)
           }}
+          variant="contained"
         >
           Create Batch
         </Button>

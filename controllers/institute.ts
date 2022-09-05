@@ -80,3 +80,5 @@ export const verifyStudent = async (
     return internalError
   }
 }
+
+// const getQuizResults

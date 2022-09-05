@@ -49,8 +49,6 @@ export const saveQuizAnswers = async (
   studentId: string
 ): Promise<ApiController<string>> => {
   try {
-    console.log(quizId, answerData)
-
     let quiz = await Quiz.getAllQuestions(quizId)
     let maxMarks = quiz.questions.reduce((acc, curr) => acc + curr.marks, 0)
     let totalMarks = answerData.reduce((acc, curr, i) => {

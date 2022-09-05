@@ -24,6 +24,12 @@ const QuizAnswersSchema = new mongoose.Schema({
       },
     },
   ],
+  totalMarks: {
+    type: Number,
+  },
+  maxMarks: {
+    type: Number,
+  },
 })
 
 const QuizAnswers =

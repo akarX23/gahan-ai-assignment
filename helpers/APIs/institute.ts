@@ -1,4 +1,10 @@
-import { BatchModel, StudentVerification, userInDb } from 'helpers/types'
+import {
+  BatchModel,
+  QuizAnswers,
+  QuizModel,
+  StudentVerification,
+  userInDb,
+} from 'helpers/types'
 import api from '.'
 
 export const getInstitutes = async (): Promise<userInDb[]> =>
@@ -44,3 +50,15 @@ export const verifyStudent = async (studVerifyId: string, accept: boolean) =>
       },
     }
   )
+
+export const getOwnedQuizzes = async (): Promise<QuizModel[]> =>
+  await api.get('/quiz/owned-quizzes').then((res) => res.data)
+
+export const getQuizAnswers = async (quizId: string): Promise<QuizAnswers[]> =>
+  await api
+    .get('/quiz/results', {
+      params: {
+        quizId,
+      },
+    })
+    .then((res) => res.data)

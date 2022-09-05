@@ -1,4 +1,5 @@
 import React from 'react'
+import QuizResults from '../QuizResults/QuizResults'
 import Batches from './Batches'
 import Quizzes from './Quizzes'
 
@@ -7,6 +8,7 @@ const Teacher = () => {
     <div>
       <Batches />
       <Quizzes />
+      <QuizResults />
     </div>
   )
 }
