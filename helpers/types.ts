@@ -37,8 +37,8 @@ export interface userInDb {
   dob?: string
   address?: string
   type?: userTypes
-  studentBatch?: string | BatchModel
-  teacherInstitute?: userInDb | string
+  studentBatch?: string & BatchModel
+  teacherInstitute?: userInDb & string
 }
 
 export interface LoginParams {

@@ -1,18 +1,21 @@
-import { getTeacherBatches } from 'controllers/teacher'
+import {} from 'controllers/batch'
+import { insertQuizQuestion } from 'controllers/teacher'
 import dbConnect from 'helpers/dbConnect'
-import { AuthApiRequest, userTypes } from 'helpers/types'
+import { AuthApiRequest, QuizQuestionModel, userTypes } from 'helpers/types'
 import auth from 'middlewares/auth'
 import { NextApiResponse } from 'next'
 
 dbConnect()
 
-interface CustomRequest extends AuthApiRequest {}
+interface CustomRequest extends AuthApiRequest {
+  body: QuizQuestionModel
+}
 
 const handler = async (req: CustomRequest, res: NextApiResponse) => {
   let response
   switch (req.method) {
-    case 'GET':
-      response = await getTeacherBatches(req.user._id)
+    case 'POST':
+      response = await insertQuizQuestion(req.body)
       res.status(response.status).json(response.data)
       break
     default:

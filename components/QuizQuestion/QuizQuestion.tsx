@@ -1,4 +1,5 @@
 import { Button } from '@mui/material'
+import { addQuestion } from 'helpers/APIs/teacher'
 import { QuizQuestionModel } from 'helpers/types'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -10,22 +11,34 @@ type Props = {
 }
 
 const QuizQuestion = (props: Props) => {
-  const { control, handleSubmit, getValues, reset } =
-    useForm<QuizQuestionModel>({
-      defaultValues: {
-        question: '',
-        options: [],
-        correctOption: 0,
-        marks: 0,
-      },
-    })
+  const { control, handleSubmit, reset } = useForm<QuizQuestionModel>({
+    defaultValues: {
+      question: '',
+      correctOption: 0,
+      marks: 0,
+      _id: '',
+    },
+  })
 
   const [optionTexts, setOptionTexts] = useState<string[]>([])
 
+  const onSubmit = async (data: QuizQuestionModel) => {
+    console.log(data)
+
+    data.options = optionTexts
+
+    let newQuestion = await addQuestion(data)
+    reset(newQuestion)
+
+    props.onFinish(newQuestion._id, newQuestion)
+  }
+
   return (
     <div className="w-full max-w-2xl">
-      <h2>Question {props.serialNumber + 1}</h2>
-      <form>
+      <div className="flex items-center justify-between">
+        <h2 className="mr-3">Question {props.serialNumber + 1}</h2>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
           control={control}
           name="question"
@@ -54,23 +67,29 @@ const QuizQuestion = (props: Props) => {
           </Button>
         </div>
         {optionTexts.map((option, i) => (
-          <p className="flex">
+          <div className="my-4 flex" key={i}>
             <p>{i + 1}: </p>
             <input
               type="text"
               value={option}
               onChange={(event) =>
                 setOptionTexts(
-                  optionTexts.map((_, j) =>
-                    i === j ? event.target.value : option
+                  optionTexts.map((prevOption, j) =>
+                    i === j ? event.target.value : prevOption
                   )
                 )
               }
               className="ml-2 w-auto p-1 text-lg"
             />
-          </p>
+          </div>
         ))}
+        <div className="flex justify-end">
+          <Button color="primary" variant="contained" type="submit">
+            Save
+          </Button>
+        </div>
       </form>
+      <hr />
     </div>
   )
 }
