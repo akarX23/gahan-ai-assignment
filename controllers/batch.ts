@@ -3,8 +3,9 @@ import { ApiController, BatchModel, userInDb, userTypes } from 'helpers/types'
 import * as Batch from 'models/Batch'
 import * as User from 'models/User'
 import * as StudVerify from 'models/StudentVerification'
+import mongoose from 'mongoose'
 
-export const createBatch = async (
+export const addOrUpdateBatch = async (
   batchDetails: BatchModel,
   loggedInUser: userInDb
 ): Promise<ApiController<BatchModel | string>> => {
@@ -23,11 +24,15 @@ export const createBatch = async (
     )
       return { status: statusCode.BadRequest, data: 'Not right teacher' }
 
-    let newBatch = await Batch.insertOne({
-      ...batchDetails,
-      institute: loggedInUser._id,
-      students: [],
-    })
+    let newBatch = await Batch.upsertOne(
+      {
+        _id: batchDetails._id || new mongoose.Types.ObjectId().toString(),
+      },
+      {
+        ...batchDetails,
+        institute: loggedInUser._id,
+      }
+    )
 
     return { status: statusCode.Success, data: newBatch }
   } catch (error) {

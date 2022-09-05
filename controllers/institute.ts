@@ -18,3 +18,18 @@ export const getAllInstitutes = async (): Promise<
     return internalError
   }
 }
+
+export const getAllTeachers = async (
+  institute: userInDb
+): Promise<ApiController<userInDb[]>> => {
+  try {
+    let teachers = await User.find(
+      { type: userTypes.teacher, teacherInstitute: institute._id },
+      'name _id'
+    )
+    return { status: statusCode.Success, data: teachers }
+  } catch (error) {
+    console.log('Institute', error)
+    return internalError
+  }
+}

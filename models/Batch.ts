@@ -8,7 +8,7 @@ const BatchSchema = new mongoose.Schema({
   },
   teacher: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Batch',
+    ref: 'User',
   },
   institute: {
     type: mongoose.Schema.Types.ObjectId,
@@ -73,7 +73,7 @@ const addStudentToBatch = async (batchId: string, studentId: string) => {
 
 const batchesWithTeacher = async (instituteId: string) => {
   const batch = await Batch.find({ institute: instituteId })
-    .populate('teacher')
+    .populate('teacher', 'name email _id')
     .lean()
 
   return batch

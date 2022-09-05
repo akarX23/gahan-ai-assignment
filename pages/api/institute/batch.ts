@@ -1,4 +1,4 @@
-import { createBatch, getBatchesWithTeacher } from 'controllers/batch'
+import { addOrUpdateBatch, getBatchesWithTeacher } from 'controllers/batch'
 import dbConnect from 'helpers/dbConnect'
 import { AuthApiRequest, BatchModel, userTypes } from 'helpers/types'
 import auth from 'middlewares/auth'
@@ -17,7 +17,7 @@ const handler = async (req: CustomRequest, res: NextApiResponse) => {
   let response
   switch (req.method) {
     case 'POST':
-      response = await createBatch(req.body, req.user)
+      response = await addOrUpdateBatch(req.body, req.user)
       res.status(response.status).json(response.data)
       break
 
@@ -25,7 +25,6 @@ const handler = async (req: CustomRequest, res: NextApiResponse) => {
       response = await getBatchesWithTeacher(req.user._id)
       res.status(response.status).json(response.data)
       break
-
     default:
       res.status(400).json({ message: 'Bad request' })
   }

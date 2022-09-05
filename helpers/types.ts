@@ -102,7 +102,7 @@ export interface AuthApiRequest extends NextApiRequest {
 export interface BatchModel {
   _id?: string
   title?: string
-  teacher?: userInDb | string
+  teacher?: userInDb & string
   institute?: userInDb | string
   students?: userInDb[] | string[]
 }
@@ -171,4 +171,20 @@ export interface QuizModel {
   institute?: userInDb | string
   startTime?: string
   endTime?: string
+}
+
+export interface DefaultComponentProps {
+  children?: React.ReactElement
+  window?: any
+  key?: number | string
+}
+
+export interface ModalProps extends DefaultComponentProps {
+  open?: boolean
+  closeDialog?: (openState: boolean) => void
+  heading?: string
+  buttonTxt?: string
+  onSubmit?: () => void
+  actionInProgress?: boolean
+  headerStyles?: string
 }

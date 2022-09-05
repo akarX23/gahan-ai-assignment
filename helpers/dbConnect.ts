@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
-// if (process.env.NODE_ENV === "development")
-//   for (let model in mongoose.models) delete mongoose.models[model];
+// if (process.env.NODE_ENV === 'development')
+//   for (let model in mongoose.models) delete mongoose.models[model]
 
 import 'models/User'
 
