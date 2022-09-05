@@ -56,3 +56,18 @@ export const insertQuiz = async (
     return internalError
   }
 }
+
+export const getTeacherQuizzes = async (
+  teacher: userInDb
+): Promise<ApiController<QuizModel[]>> => {
+  try {
+    const quizzes = await Quiz.find(
+      { teacher: teacher._id },
+      'title _id duration'
+    )
+    return { status: statusCode.Success, data: quizzes }
+  } catch (err) {
+    console.log(err)
+    return internalError
+  }
+}

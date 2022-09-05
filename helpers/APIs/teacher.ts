@@ -11,3 +11,6 @@ export const addQuestion = async (
 
 export const addQuiz = async (quizData: QuizModel): Promise<QuizModel> =>
   await api.post('/teacher/quiz', quizData).then((res) => res.data)
+
+export const getQuizzes = async (): Promise<QuizModel[]> =>
+  await api.get('/teacher/quiz').then((res) => res.data)

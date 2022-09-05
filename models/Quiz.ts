@@ -103,6 +103,9 @@ const getQuizzesForStudent = async (batchId: string) => {
   return quizzes
 }
 
+const find = async (query: QuizModel, select?: string) =>
+  await Quiz.find(query).select(select).lean()
+
 export {
   Quiz,
   QuizQuestion,
@@ -111,4 +114,5 @@ export {
   getQuizDataWithoutAnswers,
   getQuizDataWithAnswers,
   getQuizzesForStudent,
+  find,
 }
